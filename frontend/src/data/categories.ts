@@ -1,4 +1,5 @@
 export interface Category {
+  count: string;
   id: number;
   name: string;
   emoji: string;

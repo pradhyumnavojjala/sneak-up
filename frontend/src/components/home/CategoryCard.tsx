@@ -1,42 +1,46 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { FiArrowRight } from "react-icons/fi";
 
 interface Props {
   name: string;
   emoji: string;
   color: string;
+  count: string; // Add this!
 }
 
-export default function CategoryCard({
-  name,
-  emoji,
-  color,
-}: Props) {
+export default function CategoryCard({ name, emoji, color, count }: Props) {
   return (
-    <motion.div
-      whileHover={{
-        y: -8,
-        scale: 1.03,
-      }}
-      transition={{ duration: 0.2 }}
-      className="group cursor-pointer rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition hover:border-sneakup-purple/20 hover:shadow-xl"
-    >
-      <div
-        className={`mx-auto flex h-24 w-24 items-center justify-center rounded-full ${color}`}
+    <Link href={`/category/${name.toLowerCase()}`}>
+      <motion.div
+        whileHover={{ y: -5 }}
+        whileTap={{ scale: 0.98 }}
+        className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition-all hover:border-gray-200 hover:shadow-lg"
       >
-        <span className="text-5xl transition duration-300 group-hover:scale-110">
+        {/* Background Accent */}
+        <div className={`absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-10 ${color}`} />
+
+        {/* Emoji Container */}
+        <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-50 text-3xl shadow-inner transition-transform duration-500 group-hover:rotate-12">
           {emoji}
-        </span>
-      </div>
+        </div>
 
-      <h3 className="mt-5 text-center text-lg font-semibold text-sneakup-dark">
-        {name}
-      </h3>
+        {/* Text Content */}
+        <div className="relative z-10 mt-6 flex-grow">
+          <h3 className="text-lg font-bold text-gray-900">{name}</h3>
+          <p className="mt-1 text-sm font-medium text-gray-400">{count} Items</p>
+        </div>
 
-      <p className="mt-2 text-center text-sm text-gray-500 opacity-0 transition duration-300 group-hover:opacity-100">
-        Explore →
-      </p>
-    </motion.div>
+        {/* Bottom Bar */}
+        <div className="relative z-10 mt-6 flex items-center justify-between text-sneakup-purple font-bold text-sm">
+          <span>Explore</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 transition-colors group-hover:bg-sneakup-purple group-hover:text-white">
+            <FiArrowRight />
+          </div>
+        </div>
+      </motion.div>
+    </Link>
   );
 }

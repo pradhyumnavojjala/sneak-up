@@ -10,12 +10,11 @@ export default function MealRow({
   meals,
   reverse = false,
 }: Props) {
-
+  // Double the list array buffer to feed a seamless infinite loop animation
   const items = [...meals, ...meals];
 
   return (
-    <div className="overflow-hidden">
-
+    <div className="overflow-hidden w-full">
       <div
         className={`
           flex
@@ -33,11 +32,15 @@ export default function MealRow({
         {items.map((meal, index) => (
           <MealCard
             key={`${meal.id}-${index}`}
-            {...meal}
+            id={meal.id.toString()} // ✅ Explicit conversion guarantees matching your strict cart schema
+            name={meal.name}
+            emoji={meal.emoji}
+            price={meal.price}
+            rating={meal.rating}
+            storeId={meal.storeId?.toString() || "1"} // Safe optional mapping defaults to fallback context
           />
         ))}
       </div>
-
     </div>
   );
 }

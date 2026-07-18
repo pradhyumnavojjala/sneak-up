@@ -9,39 +9,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stores")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StoreController {
 
     @Autowired
-    private StoreService storeService;
+    private StoreService service;
 
-    // GET all stores
     @GetMapping
-    public List<Store> getAllStores() {
-        return storeService.getAllStores();
+    public List<Store> getStores() {
+        return service.getAllStores();
     }
 
-    // GET store by ID
     @GetMapping("/{id}")
-    public Store getStoreById(@PathVariable Long id) {
-        return storeService.getStoreById(id);
+    public Store getStore(@PathVariable Long id) {
+        return service.getStoreById(id);
     }
 
-    // CREATE store
     @PostMapping
-    public Store createStore(@RequestBody Store store) {
-        return storeService.createStore(store);
+    public Store addStore(@RequestBody Store store) {
+        return service.addStore(store);
     }
 
-    // UPDATE store
     @PutMapping("/{id}")
     public Store updateStore(@PathVariable Long id,
                              @RequestBody Store store) {
-        return storeService.updateStore(id, store);
+        return service.updateStore(id, store);
     }
 
-    // DELETE store
     @DeleteMapping("/{id}")
-    public void deleteStore(@PathVariable Long id) {
-        storeService.deleteStore(id);
+    public String deleteStore(@PathVariable Long id) {
+        service.deleteStore(id);
+        return "Store Deleted Successfully";
     }
+
 }

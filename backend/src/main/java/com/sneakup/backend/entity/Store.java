@@ -1,6 +1,9 @@
 package com.sneakup.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "stores")
@@ -18,22 +21,24 @@ public class Store {
 
     private String delivery;
 
-    private String products;
-
     private String color;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Product> products;
 
     public Store() {
     }
 
     public Store(Long id, String name, String emoji, Double rating,
-                 String delivery, String products, String color) {
+                 String delivery, String color, List<Product> products) {
         this.id = id;
         this.name = name;
         this.emoji = emoji;
         this.rating = rating;
         this.delivery = delivery;
-        this.products = products;
         this.color = color;
+        this.products = products;
     }
 
     public Long getId() {
@@ -76,19 +81,19 @@ public class Store {
         this.delivery = delivery;
     }
 
-    public String getProducts() {
-        return products;
-    }
-
-    public void setProducts(String products) {
-        this.products = products;
-    }
-
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

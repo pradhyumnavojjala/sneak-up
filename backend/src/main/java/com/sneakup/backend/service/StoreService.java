@@ -11,39 +11,39 @@ import java.util.List;
 public class StoreService {
 
     @Autowired
-    private StoreRepository storeRepository;
+    private StoreRepository repository;
 
     public List<Store> getAllStores() {
-        return storeRepository.findAll();
+        return repository.findAll();
     }
 
     public Store getStoreById(Long id) {
-        return storeRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
-    public Store createStore(Store store) {
-        return storeRepository.save(store);
+    public Store addStore(Store store) {
+        return repository.save(store);
     }
 
-    public Store updateStore(Long id, Store updatedStore) {
+    public Store updateStore(Long id, Store store) {
 
-        Store existingStore = storeRepository.findById(id).orElse(null);
+        Store existing = repository.findById(id).orElse(null);
 
-        if (existingStore == null) {
+        if (existing == null)
             return null;
-        }
 
-        existingStore.setName(updatedStore.getName());
-        existingStore.setEmoji(updatedStore.getEmoji());
-        existingStore.setRating(updatedStore.getRating());
-        existingStore.setDelivery(updatedStore.getDelivery());
-        existingStore.setProducts(updatedStore.getProducts());
-        existingStore.setColor(updatedStore.getColor());
+        existing.setName(store.getName());
+        existing.setEmoji(store.getEmoji());
+        existing.setRating(store.getRating());
+        existing.setDelivery(store.getDelivery());
+        existing.setProducts(store.getProducts());
+        existing.setColor(store.getColor());
 
-        return storeRepository.save(existingStore);
+        return repository.save(existing);
     }
 
     public void deleteStore(Long id) {
-        storeRepository.deleteById(id);
+        repository.deleteById(id);
     }
+
 }
